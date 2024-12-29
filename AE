@@ -5,7 +5,7 @@ local currentPlaceId = game.PlaceId
 local targetPlaceId = 10450270085 -- ここに対象のゲームPlace IDを入力
 
 -- 10秒待機してから実行
-task.wait(10)
+task.wait(60)
 
 -- 一致する場合にコードを実行
 if currentPlaceId == targetPlaceId then
