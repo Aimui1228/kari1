@@ -1,4 +1,12 @@
--- サービスを取得
+-- 現在のゲームのPlace IDを取得
+local currentPlaceId = game.PlaceId
+
+-- 指定されたPlace ID
+local targetPlaceId = 10450270085 -- ここに対象のゲームPlace IDを入力
+
+-- 一致する場合にコードを実行
+if currentPlaceId == targetPlaceId then
+    -- サービスを取得
 local UserInputService = game:GetService("UserInputService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -6,50 +14,37 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local skillRemote = ReplicatedStorage.Remotes.Server.Combat.Skill
 local blackFlashRemote = ReplicatedStorage.Remotes.Server.Combat.ApplyBlackFlashToNextHitbox
 
--- 現在のPlaceIdを取得
-local currentPlaceId = game.PlaceId
-print("現在のゲームのPlaceIdは:", currentPlaceId)
+-- キーが押されたときの処理
+local function onKeyPress(input, gameProcessed)
+    if gameProcessed then return end
 
--- 対象のPlaceIdを指定
-local targetPlaceId = 10450270085 -- ここに特定のPlaceIdを設定
-
--- PlaceIdが一致している場合のみスクリプトを実行
-if currentPlaceId == targetPlaceId then
-    print("対象のPlaceIdです。スクリプトを実行します。")
-
-    -- キーが押されたときの処理
-    local function onKeyPress(input, gameProcessed)
-        if gameProcessed then return end
-
-        if input.KeyCode == Enum.KeyCode.Z then
-            skillRemote:FireServer("Manic Barrage")
-        elseif input.KeyCode == Enum.KeyCode.V then
-            skillRemote:FireServer("Pavement Slam")
-        elseif input.KeyCode == Enum.KeyCode.B then
-            skillRemote:FireServer("Blitz")
-        elseif input.KeyCode == Enum.KeyCode.G then
-            skillRemote:FireServer("Shrapnel Barrage")
-        elseif input.KeyCode == Enum.KeyCode.T then
-            skillRemote:FireServer("Super Senses")
-        elseif input.KeyCode == Enum.KeyCode.Y then
-            skillRemote:FireServer("Jutsushi Goroshi")
-        elseif input.KeyCode == Enum.KeyCode.C then
-            skillRemote:FireServer("Bloodlust")
-        end
+    if input.KeyCode == Enum.KeyCode.Z then
+        skillRemote:FireServer("Manic Barrage")
+    elseif input.KeyCode == Enum.KeyCode.V then
+        skillRemote:FireServer("Pavement Slam")
+    elseif input.KeyCode == Enum.KeyCode.B then
+        skillRemote:FireServer("Blitz")
+    elseif input.KeyCode == Enum.KeyCode.G then
+        skillRemote:FireServer("Shrapnel Barrage")
+    elseif input.KeyCode == Enum.KeyCode.T then
+        skillRemote:FireServer("Super Senses")
+    elseif input.KeyCode == Enum.KeyCode.Y then
+        skillRemote:FireServer("Jutsushi Goroshi")
+    elseif input.KeyCode == Enum.KeyCode.C then
+        skillRemote:FireServer("Bloodlust")
     end
+end
 
-    -- 右クリックの処理
-    local function onMouseClick(input, gameProcessed)
-        if gameProcessed then return end
+-- 右クリックの処理
+local function onMouseClick(input, gameProcessed)
+    if gameProcessed then return end
 
-        if input.UserInputType == Enum.UserInputType.MouseButton2 then -- 右クリック
-            blackFlashRemote:FireServer()
-        end
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then -- 右クリック
+        blackFlashRemote:FireServer()
     end
+end
 
-    -- 入力を検知
-    UserInputService.InputBegan:Connect(onKeyPress)
-    UserInputService.InputBegan:Connect(onMouseClick)
-else
-    print("対象外のPlaceIdです。スクリプトは実行されません。")
+-- 入力を検知
+UserInputService.InputBegan:Connect(onKeyPress)
+UserInputService.InputBegan:Connect(onMouseClick)
 end
