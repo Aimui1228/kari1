@@ -2,13 +2,14 @@
 local currentPlaceId = game.PlaceId
 
 -- 指定されたPlace ID
-local targetPlaceId = 10450270085 -- ここに対象のゲームPlace IDを入力
+local targetPlaceIds = {10450270085, 16379684339, 9876543210} -- ここに対象のゲームPlace IDを入力
 
 -- 10秒待機してから実行
-task.wait(60)
+task.wait(10)
 
 -- 一致する場合にコードを実行
-if currentPlaceId == targetPlaceId then
+if table.find(targetPlaceIds, currentPlaceId) then
+
     -- サービスを取得
     local UserInputService = game:GetService("UserInputService")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
